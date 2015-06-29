@@ -1,0 +1,17 @@
+//ES6
+var data = [{...}, {...}, {...}, ...];
+data.forEach(elem => {
+    console.log(elem);
+})
+
+// ES6
+var miFuncion = (num) => num + num;
+
+//ES6
+var obj = {
+    foo : function() {...},
+    bar : function() {
+        document.addEventListener("click", (e) => this.foo());
+    }
+}
+
