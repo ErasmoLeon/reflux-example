@@ -1,0 +1,25 @@
+{
+  "name": "refluxTest",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "babelify": "^6.1.2",
+    "body-parser": "~1.12.4",
+    "browserify": "^10.1.3",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "express": "~4.12.4",
+    "gulp-live-server": "0.0.21",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "jade": "~1.9.2",
+    "morgan": "~1.5.3",
+    "react": "^0.13.3",
+    "reflux": "^0.2.8",
+    "serve-favicon": "~2.2.1",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
