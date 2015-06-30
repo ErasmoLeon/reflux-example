@@ -1,5 +1,5 @@
-var Reflux = require("reflux");
-var ProfileActions = require("../actions/ProfileActions.js").ProfileActions;
+import Reflux from 'reflux';
+import ProfileActions from '../../actions/users/ProfileActions.jsx';
 
 var person = {
   name: "Erasmo",
@@ -18,6 +18,10 @@ var ProfileStore = Reflux.createStore({
   }
 });
 
-module.exports.ProfileStore = ProfileStore;
+export default ProfileStore;
+
+
+
+
 
 

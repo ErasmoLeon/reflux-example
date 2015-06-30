@@ -5,15 +5,42 @@ var gulp = require('gulp'),
   browserify = require('browserify'),
   babelify = require('babelify'),
   source = require('vinyl-source-stream'),
-  rename = require('gulp-rename');
+  rename = require('gulp-rename'),
+  nodemon = require('gulp-nodemon');
 
 var CONF = {
-  COMPONENT_PATH: 'components/',
+  COMPONENT_PATH: 'app/components/',
   DIST_PATH: 'public/'
 };
 
 gulp.task('develop', function () {
-  var server = gls.new('bin/www.js');
+  nodemon({
+      script: 'bin/www.js',
+      watch: [
+        'app/**/*.jsx',
+        'app/**/*.js',
+      ],
+      tasks: function (changedFiles) {
+        var tasks = [];
+        changedFiles.forEach(function (file) {
+          if (path.extname(file) === '.jsx' && !~tasks.indexOf('browserify')) tasks.push('browserify');
+        });
+        return tasks;
+      },
+      env: {
+        "NODE_ENV": "development"
+      }
+    }
+  )
+    .on('restart', function () {
+      console.log('restarted!')
+    })
+});
+
+gulp.task('develop2', function () {
+  //var server = gls.new(['--harmony', 'bin/www.js']);
+  var server = gls('bin/www.js', {env: {NODE_ENV: 'development'}});
+
   server.start();
   gulp.watch(CONF.COMPONENT_PATH + '**/*.jsx', ['browserify']);
   gulp.watch('app.js', server.start.bind(server));
@@ -21,10 +48,10 @@ gulp.task('develop', function () {
 
 gulp.task('browserify', function () {
   var files = [
-    'app.jsx'
+    'client.jsx'
   ];
   files.map(function (entry) {
-    browserify('./' + CONF.COMPONENT_PATH + 'bundles/' + entry)
+    browserify('./app/' + entry)
       .transform(babelify)
       .bundle()
       .on('error', function (e) {
@@ -35,7 +62,7 @@ gulp.task('browserify', function () {
       .pipe(rename({
         extname: '.js'
       }))
-      .pipe(gulp.dest(CONF.DIST_PATH + 'scripts/bundles/'));
+      .pipe(gulp.dest(CONF.DIST_PATH + 'scripts/'));
   });
 });
 
